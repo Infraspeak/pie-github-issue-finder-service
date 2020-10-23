@@ -21,7 +21,7 @@ FROM php:7.4-fpm-alpine as php
 WORKDIR /var/www/html
 
 # Install PHP dependencies
-RUN apt-get update -y && apt-get install -y libxml2-dev
+RUN apk update -y && apk install -y libxml2-dev
 RUN docker-php-ext-install pdo pdo_mysql mbstring opcache tokenizer xml ctype json bcmath pcntl
 
 # Copy existing application directory permissions
