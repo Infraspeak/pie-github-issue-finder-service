@@ -21,16 +21,7 @@ FROM php:7.4-fpm-alpine as php
 WORKDIR /var/www/html
 
 # Install PHP dependencies
-# Install Additional dependencies
-RUN apk update && apk add --no-cache \
-    build-base shadow vim curl \
-    php7 \
-    php7-fpm \
-    php7-common \
-    php7-mcrypt \
-    php7-mbstring \
-    php7-openssl \
-    php7-json
+RUN apk update -y && apk install -y libxml2-dev
 RUN docker-php-ext-install pdo pdo_mysql mbstring opcache tokenizer xml ctype json bcmath pcntl
 
 # Copy existing application directory permissions
