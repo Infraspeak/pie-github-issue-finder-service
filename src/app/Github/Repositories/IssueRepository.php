@@ -2,7 +2,8 @@
 
 namespace App\Github\Repositories;
 
-use App\Github\Entities\Issue;
+use App\Github\Schema\Issue;
+use App\Github\Schema\Repo;
 use Github\Client;
 use Monolog\DateTimeImmutable;
 
@@ -18,7 +19,7 @@ class IssueRepository implements IssueRepositoryInterface
         $this->client = $githubClient;
     }
 
-    public function getOpenIssues(string $vendorName, string $packageName): array {
+    public function getOpenIssues(Repo $repo): array {
         $searchParameters = [
             'state' => self::STATE_OPEN,
             'per_page' => self::RESULTS_PER_PAGE,
@@ -26,7 +27,7 @@ class IssueRepository implements IssueRepositoryInterface
 
         return array_map(
             [$this, 'parseIssue'],
-            $this->client->issues()->all($vendorName, $packageName, $searchParameters)
+            $this->client->issues()->all($repo->getVendorName(), $repo->getGetRepoName(), $searchParameters)
         );
     }
 
@@ -34,7 +35,7 @@ class IssueRepository implements IssueRepositoryInterface
     {
         return new Issue(
             $issueData['id'],
-            $issueData['url'],
+            $issueData['html_url'],
             $issueData['title'],
             $issueData['body'],
             $issueData['user']['login'],

@@ -1,4 +1,7 @@
 version: '3'
+networks:
+  github_issue_finder:
+
 services:
   nginx:
     image: nginx:stable-alpine
@@ -9,6 +12,8 @@ services:
       - ./src:/var/www/html
     depends_on:
       - php
+    networks:
+      - github_issue_finder
 
   php:
     build:
@@ -20,6 +25,8 @@ services:
       - ./src:/var/www/html
     ports:
       - "9000:9000"
+    networks:
+      - github_issue_finder
 
   composer:
     image: composer:latest
@@ -29,6 +36,8 @@ services:
     working_dir: /var/www/html
     depends_on:
       - php
+    networks:
+      - github_issue_finder
 
   artisan:
     build:
@@ -40,3 +49,13 @@ services:
       - ./src:/var/www/html
     working_dir: /var/www/html
     entrypoint: ['php', '/var/www/html/artisan']
+    networks:
+      - github_issue_finder
+
+  redis:
+    image: redis:5.0.6-alpine
+    ports:
+      - 6379:6379
+    command: redis-server --appendonly yes
+    networks:
+      - github_issue_finder
