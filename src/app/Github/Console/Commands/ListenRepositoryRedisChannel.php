@@ -4,7 +4,7 @@ namespace App\Github\Console\Commands;
 
 use App\Github\Repositories\IssueRepository;
 use App\Github\Schema\Repo;
-use http\Exception;
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Redis;
 
