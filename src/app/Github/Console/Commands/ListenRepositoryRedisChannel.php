@@ -54,6 +54,7 @@ class ListenRepositoryRedisChannel extends Command
 
                 Redis::connection('publish')->publish('ISSUES', json_encode($response));
             } catch (Exception $e) {
+                dump($e->getMessage());
             }
         });
     }

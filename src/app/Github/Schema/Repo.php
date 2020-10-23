@@ -7,6 +7,9 @@ use JsonSerializable;
 class Repo implements JsonSerializable
 {
     /** @var string */
+    private $name;
+
+    /** @var string */
     private $vendorName;
 
     /** @var string */
@@ -18,11 +21,17 @@ class Repo implements JsonSerializable
     /** @var string */
     private $url;
 
-    public function __construct(string $name, string $version, string $url)
+    public function __construct(string $name, string $url, string $version)
     {
-        list($this->vendorName, $this->repoName) = explode('/', $name);
+        if (!preg_match('/github.com\/([\w_-]+)\/([\w_-]+)/', $url, $matches)) {
+            throw new \Exception('Invalid github repo');
+        }
+
+        $this->name = $name;
         $this->version = $version;
         $this->url = $url;
+        $this->vendorName = $matches[1];
+        $this->repoName = $matches[2];
     }
 
     public function getVendorName(): string
@@ -38,7 +47,7 @@ class Repo implements JsonSerializable
     public function jsonSerialize(): array
     {
         return [
-            "name" => "$this->vendorName/$this->repoName",
+            "name" => $this->name,
             "version" => $this->version,
             "url" => $this->url,
         ];
