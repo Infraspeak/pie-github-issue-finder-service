@@ -1,6 +1,3 @@
-# ignore all files starting with .
-.*
-
 # track this file .gitignore (i.e. do NOT ignore it)
 !.gitignore
 
@@ -20,6 +17,7 @@ Thumbs.db
 *.sublime-workspace
 *.komodoproject
 .editorconfig
+.idea
 
 # ignore log files and databases
 *.log
