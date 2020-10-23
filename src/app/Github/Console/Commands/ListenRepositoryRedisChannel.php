@@ -40,7 +40,6 @@ class ListenRepositoryRedisChannel extends Command
             try {
                 $request = json_decode($message);
 
-
                 $repo = new Repo($request->payload->name, $request->payload->url, $request->payload->version);
 
                 $issues = app()->make(IssueRepository::class)->getOpenIssues($repo);
