@@ -34,5 +34,5 @@ jobs:
           context: .
           file: ./Dockerfile
           tags: |
-            alimainfraspeak/test-docker:latest
-            alimainfraspeak/test-docker:${{ steps.tag.outputs.new_tag }}
+            alimainfraspeak/github-issue-finder-service-docker:latest
+            alimainfraspeak/github-issue-finder-service-docker:${{ steps.tag.outputs.new_tag }}
