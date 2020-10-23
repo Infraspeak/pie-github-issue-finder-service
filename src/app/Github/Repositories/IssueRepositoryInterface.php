@@ -2,7 +2,11 @@
 
 namespace App\Github\Repositories;
 
+use App\Github\Schema\Issue;
+use App\Github\Schema\Repo;
+
 interface IssueRepositoryInterface
 {
-    public function getOpenIssues(string $vendorName, string $packageName): array;
+    /** @return array<Issue> */
+    public function getOpenIssues(Repo $repo): array;
 }

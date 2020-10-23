@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Github\Entities;
+namespace App\Github\Schema;
 
 use DateTimeInterface;
 use JsonSerializable;

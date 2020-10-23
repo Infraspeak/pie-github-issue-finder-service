@@ -39,7 +39,7 @@ class IssueRepositoryTest extends TestCase
         $expectedResponse = [
             [
                 "id" => 1,
-                "url" => 'https://api.github.com/repos/octocat/Hello-World/issues/1347',
+                "url" => 'https://github.com/octocat/Hello-World/issues/1347',
                 "title" => 'Found a bug',
                 "description" => 'I\'m having a problem with this.',
                 "author" => 'octocat',
