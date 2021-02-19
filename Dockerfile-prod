@@ -1,32 +1,37 @@
 #
 # PHP Dependencies
 #
-FROM composer:2.0 as vendor
+FROM composer:1.9.3 as vendor
+
 WORKDIR /app
+
 COPY src/database/ database/
 COPY src/composer.json composer.json
 COPY src/composer.lock composer.lock
+
 RUN composer install \
     --no-interaction \
     --no-plugins \
     --no-scripts \
     --no-dev \
     --prefer-dist
-COPY . .
+
+COPY ./src .
 RUN composer dump-autoload
 
-FROM php:7.4-fpm-alpine as php
+#
+# Application
+#
+FROM php:7.4-fpm
 
-# Set working directory
-WORKDIR /var/www/html
+WORKDIR /app
 
 # Install PHP dependencies
-RUN apk update -y && apk install -y libxml2-dev
+RUN apt-get update -y && apt-get install -y libxml2-dev libonig-dev
 RUN docker-php-ext-install pdo pdo_mysql mbstring opcache tokenizer xml ctype json bcmath pcntl
 
-# Copy existing application directory permissions
+# Copy Composer dependencies
 COPY --from=vendor /app/vendor/ ./vendor/
-COPY ./src/ .
+COPY ./src .
 
-RUN php artisan config:cache
-RUN php artisan route:cache
+ENTRYPOINT php artisan redis:listen-repositories
