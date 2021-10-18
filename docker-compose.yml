@@ -1,19 +1,15 @@
 version: '3'
-networks:
-  github_issue_finder:
 
 services:
   nginx:
     image: nginx:stable-alpine
     container_name: server
-    ports:
-      - "8080:80"
     volumes:
       - ./src:/var/www/html
+      - ./config/nginx:/etc/nginx/conf.d:ro
     depends_on:
       - php
-    networks:
-      - github_issue_finder
+    network_mode: "host"
 
   php:
     build:
@@ -23,39 +19,5 @@ services:
     user: "${WORKSPACE_PUID}"
     volumes:
       - ./src:/var/www/html
-    ports:
-      - "9000:9000"
-    networks:
-      - github_issue_finder
-
-  composer:
-    image: composer:latest
-    container_name: composer
-    volumes:
-      - ./src:/var/www/html
-    working_dir: /var/www/html
-    depends_on:
-      - php
-    networks:
-      - github_issue_finder
-
-  artisan:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: artisan
-    user: "${WORKSPACE_PUID}"
-    volumes:
-      - ./src:/var/www/html
-    working_dir: /var/www/html
-    entrypoint: ['php', '/var/www/html/artisan']
-    networks:
-      - github_issue_finder
-
-  redis:
-    image: redis:5.0.6-alpine
-    ports:
-      - 6379:6379
-    command: redis-server --appendonly yes
-    networks:
-      - github_issue_finder
+      - ./config/php:/usr/local/etc/php-fpm.d:ro
+    network_mode: "host"

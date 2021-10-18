@@ -24,7 +24,7 @@ return [
     |
     */
 
-    'default' => 'none',
+    'default' => 'main',
 
     /*
     |--------------------------------------------------------------------------
@@ -42,9 +42,9 @@ return [
 
         'main' => [
             'method'     => 'token',
-            'token'      => 'your-token',
+            'token'      => env('GITHUB_KEY'),
             // 'backoff'    => false,
-            // 'cache'      => false,
+            'cache'      => 'main',
             // 'version'    => 'v3',
             // 'enterprise' => false,
         ],
@@ -54,7 +54,7 @@ return [
             'clientId'     => 'your-client-id',
             'clientSecret' => 'your-client-secret',
             // 'backoff'      => false,
-            // 'cache'        => false,
+            'cache'        => 'main',
             // 'version'      => 'v3',
             // 'enterprise'   => false,
         ],
@@ -63,7 +63,7 @@ return [
             'method'       => 'jwt',
             'token'        => 'your-jwt-token',
             // 'backoff'      => false,
-            // 'cache'        => false,
+            'cache'        => 'main',
             // 'version'      => 'v3',
             // 'enterprise'   => false,
         ],
@@ -74,7 +74,7 @@ return [
             'keyPath'    => 'your-private-key-path',
             // 'key'        => 'your-private-key-content',
             // 'backoff'    => false,
-            // 'cache'      => false,
+            'cache'      => 'main',
             // 'version'    => 'v3',
             // 'enterprise' => false,
         ],
@@ -84,7 +84,7 @@ return [
             'username'   => 'your-username',
             'password'   => 'your-password',
             // 'backoff'    => false,
-            // 'cache'      => false,
+            'cache'      => 'main',
             // 'version'    => 'v3',
             // 'enterprise' => false,
         ],
@@ -92,7 +92,7 @@ return [
         'none' => [
             'method'     => 'none',
             // 'backoff'    => false,
-            // 'cache'      => false,
+            'cache'      => 'main',
             // 'version'    => 'v3',
             // 'enterprise' => false,
         ],
