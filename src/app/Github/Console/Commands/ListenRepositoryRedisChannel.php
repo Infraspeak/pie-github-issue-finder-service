@@ -54,8 +54,26 @@ class ListenRepositoryRedisChannel extends Command
 
                 Redis::connection('publish')->publish('ISSUES', json_encode($response));
             } catch (Exception $e) {
+                Redis::connection('publish')
+                    ->publish('APP_ERRORS', json_encode($this->formatError($message, $e)));
+
                 dump($e->getMessage());
             }
         });
+    }
+
+    private function formatError(string $message, Exception $exception): array
+    {
+        $request = json_encode($message, JSON_THROW_ON_ERROR);
+
+        return [
+            'headers' => $request->headers,
+            'payload' => [
+                'errors' => [
+                    'code' => $exception->getCode(),
+                    'message' => $exception->getMessage(),
+                ]
+            ]
+        ];
     }
 }
