@@ -1,4 +1,4 @@
-# Composer Parser Service
+# Github Issue Finder Service
 
 ## Project Setup
 ```
